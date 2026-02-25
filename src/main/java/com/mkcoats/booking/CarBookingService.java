@@ -102,7 +102,7 @@ public class CarBookingService {
                 Car bookedCar = booking.getCar();
                 int index = 0;
                 while (bookedCar != null && index < availableCars.length) {
-                    if (availableCars[index] != null && availableCars[index].getRegNumber() == bookedCar.getRegNumber()) {
+                    if (availableCars[index] != null && availableCars[index].getRegNumber().equals(bookedCar.getRegNumber())) {
                         availableCars[index] = null;
                         bookedCar = null;
                     } else {

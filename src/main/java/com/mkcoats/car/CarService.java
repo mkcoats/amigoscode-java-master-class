@@ -1,7 +1,5 @@
 package com.mkcoats.car;
 
-import java.util.UUID;
-
 public class CarService {
     private CarDAO carDAO;
 

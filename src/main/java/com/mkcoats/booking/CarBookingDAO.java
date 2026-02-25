@@ -22,8 +22,8 @@ public class CarBookingDAO {
         for (int i = 0; i < bookings.length; i++) {
             if (bookings[i] == null) {
                 bookings[i] = booking;
+                return booking;
             }
-            return booking;
         }
         return null;
     }
@@ -35,16 +35,6 @@ public class CarBookingDAO {
             }
         }
         return null;
-    }
-
-    private int bookingCount() {
-        int count = 0;
-        for (CarBooking booking : bookings) {
-            if (booking != null) {
-                count++;
-            }
-        }
-        return count;
     }
 
     public void deleteBooking(UUID id) {

@@ -10,11 +10,9 @@ public class UserService {
     }
 
     public User getUserById(UUID userId) {
-        User[] users = userDAO.getUsers();
-        for (int i = 0; i < users.length; i++) {
-            User tempUser = users[i];
-            if (tempUser != null && tempUser.getId().equals(userId)) {
-                return tempUser;
+        for (User user : userDAO.getUsers()) {
+            if (user != null && user.getId().equals(userId)) {
+                return user;
             }
         }
         return null;
