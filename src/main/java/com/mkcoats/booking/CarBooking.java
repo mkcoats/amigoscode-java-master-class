@@ -8,13 +8,13 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class CarBooking {
-    private UUID id;
-    private User user;
-    private Car car;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private BigDecimal price;
-    private BookingStatus status;
+    private final UUID id;
+    private final User user;
+    private final Car car;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
+    private final BigDecimal price;
+    private final BookingStatus status;
 
     public CarBooking(UUID id, User user, Car car, LocalDate startDate, LocalDate endDate, BigDecimal price, BookingStatus status) {
         this.id = id;

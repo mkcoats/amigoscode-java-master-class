@@ -3,8 +3,8 @@ package com.mkcoats.user;
 import java.util.UUID;
 
 public class User {
-    private UUID id;
-    private String name;
+    private final UUID id;
+    private final String name;
 
     public User(UUID id, String name) {
         this.id = id;
