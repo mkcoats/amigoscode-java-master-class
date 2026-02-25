@@ -53,4 +53,17 @@ public class CarBooking {
     public BookingStatus getStatus() {
         return status;
     }
+
+    @Override
+    public String toString() {
+        return "CarBooking{" +
+                "id=" + id +
+                ", user=" + user +
+                ", car=" + car +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", price=" + price +
+                ", status=" + status +
+                '}';
+    }
 }

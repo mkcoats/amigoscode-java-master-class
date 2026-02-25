@@ -1,7 +1,16 @@
 package com.mkcoats;
 // TODO 3. implement https://amigoscode.com/learn/java-cli-build/lectures/3a83ecf3-e837-4ae5-85a8-f8ae3f60f7f5
 
+import com.mkcoats.booking.CarBooking;
+import com.mkcoats.booking.CarBookingService;
+import com.mkcoats.car.Car;
+import com.mkcoats.user.User;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class Main {
 
@@ -15,6 +24,8 @@ public class Main {
             "7 - View All Users\n" +
             "8 - Exit\n";
 
+    private static CarBookingService carBookingService = new CarBookingService();
+
     public static void main(String[] args) {
         System.out.println("Java Master Class");
         Scanner scanner = new Scanner(System.in);
@@ -26,13 +37,13 @@ public class Main {
 
             switch (selection) {
                 case 1:
-                    bookACar();
+                    bookACar(scanner);
                     break;
                 case 2:
-                    deleteBooking();
+                    deleteBooking(scanner);
                     break;
                 case 3:
-                    viewUserBookings();
+                    viewUserBookings(scanner);
                     break;
                 case 4:
                     viewAllBookings();
@@ -55,40 +66,107 @@ public class Main {
         }
     }
 
-    private static void bookACar() {
+    private static void bookACar(Scanner scanner) {
         // System prompts for user ID, car selection, start date and end date.
         // Price is calculated from the car's rental price per day.
         // A car that is already booked cannot be booked again
-        System.out.println("Book a Car");
+        System.out.println("Selection: Book a Car");
+        System.out.println("Please Enter User ID to book car:");
+        System.out.println(Arrays.toString(carBookingService.getRegisteredUsers()));
+        String userId = scanner.next();
+        System.out.println("Please Enter Car Reg number for booking:");
+        String carReg = scanner.next();
+        System.out.println("Please Enter Start Date for booking in format YYYY-MM-DD:");
+        String startDateString = scanner.next();
+        LocalDate startDate = LocalDate.parse(startDateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        System.out.println("Please Enter End Date for booking in format YYYY-MM-DD:");
+        String endDateString = scanner.next();
+        LocalDate endDate = LocalDate.parse(endDateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        CarBooking newBooking = carBookingService.bookCar(UUID.fromString(userId), carReg, startDate, endDate);
+        if (newBooking != null) {
+            System.out.println("Booking successful:\n" + newBooking);
+        }
     }
 
-    private static void deleteBooking() {
+    private static void deleteBooking(Scanner scanner) {
         // Cancel an existing booking by booking ID, making the car available again
-        System.out.println("Delete Booking");
+        System.out.println("Selection: Delete Booking");
+        System.out.println("Please enter Booking Id to delete:");
+        String bookingId = scanner.next();
+        carBookingService.deleteBooking(UUID.fromString(bookingId));
     }
 
-    private static void viewUserBookings() {
+    private static void viewUserBookings(Scanner scanner) {
         // Display all cars booked by a specific user
-        System.out.println("View User Bookings");
+        System.out.println("Selection: View User Bookings");
+        System.out.println("Please enter User Id:");
+        System.out.println(Arrays.toString(carBookingService.getRegisteredUsers()));
+        String userId = scanner.next();
+        Car[] userBookedCars = carBookingService.getCarsBookedForUser(UUID.fromString(userId));
+        if (userBookedCars == null) {
+            System.out.println("No bookings for user: " + userId);
+        } else {
+            System.out.println("User: " + userId + "\nBookings:");
+            for (Car car : userBookedCars) {
+                System.out.println(car);
+            }
+        }
     }
 
     private static void viewAllBookings() {
         // Display every booking in the system
-        System.out.println("View All Bookings");
+        System.out.println("Selection: View All Bookings");
+        CarBooking[] bookings = carBookingService.getAllBookings();
+        if (bookings == null) {
+            System.out.println("No current bookings");
+        } else {
+            for (CarBooking booking : bookings) {
+                System.out.println(booking);
+            }
+        }
     }
 
     private static void viewAvailableCars() {
         // List all cars not currently booked
-        System.out.println("View Available Cars");
+        System.out.println("Selection: View Available Cars");
+        Car[] availableCars = carBookingService.getAvailableCars();
+        if (availableCars == null) {
+            System.out.println("No cars Available");
+        } else {
+            for (Car car : availableCars) {
+                if (car != null) {
+                    System.out.println(car);
+                }
+            }
+        }
     }
 
     private static void viewElectricCars() {
         // Filter and display only available electric cars
-        System.out.println("View Electric Cars");
+        System.out.println("Selection: View Electric Cars");
+        Car[] availableCars = carBookingService.getAvailableCars();
+        if (availableCars == null) {
+            System.out.println("No electric cars Available");
+        } else {
+            for (Car car : availableCars) {
+                if (car != null && car.isElectric()) {
+                    System.out.println(car);
+                }
+            }
+        }
     }
 
     private static void viewAllUsers() {
         // List all registered users
-        System.out.println("View All Users");
+        System.out.println("Selection: View All Users");
+        User[] registeredUsers = carBookingService.getRegisteredUsers();
+        if (registeredUsers == null) {
+            System.out.println("No Registered Users.");
+        } else {
+            for (User user : registeredUsers) {
+                System.out.println(user);
+            }
+        }
     }
 }

@@ -46,4 +46,12 @@ public class CarBookingDAO {
         }
         return count;
     }
+
+    public void deleteBooking(UUID id) {
+        for (int i = 0; i < bookings.length; i++) {
+            if (bookings[i] != null && id.equals(bookings[i].getId())) {
+                bookings[i] = null;
+            }
+        }
+    }
 }

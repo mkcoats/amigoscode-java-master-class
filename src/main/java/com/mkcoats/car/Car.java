@@ -37,4 +37,14 @@ public class Car {
     public boolean isElectric() {
         return isElectric;
     }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "regNumber='" + regNumber + '\'' +
+                ", rentalPricePerDay=" + rentalPricePerDay +
+                ", brand=" + brand +
+                ", isElectric=" + isElectric +
+                '}';
+    }
 }
