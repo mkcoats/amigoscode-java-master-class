@@ -1,5 +1,4 @@
 package com.mkcoats;
-// TODO 3. implement https://amigoscode.com/learn/java-cli-build/lectures/3a83ecf3-e837-4ae5-85a8-f8ae3f60f7f5
 
 import com.mkcoats.booking.CarBooking;
 import com.mkcoats.booking.CarBookingService;
@@ -72,9 +71,28 @@ public class Main {
         // A car that is already booked cannot be booked again
         System.out.println("Selection: Book a Car");
         System.out.println("Please Enter User ID to book car:");
-        System.out.println(Arrays.toString(carBookingService.getRegisteredUsers()));
+        System.out.println("--Registerd Users");
+        User[] registeredUsers = carBookingService.getRegisteredUsers();
+        if (registeredUsers == null) {
+            System.out.println("No Registered Users.");
+        } else {
+            for (User user : registeredUsers) {
+                System.out.println(user);
+            }
+        }
         String userId = scanner.next();
         System.out.println("Please Enter Car Reg number for booking:");
+        System.out.println("--Available Cars");
+        Car[] availableCars = carBookingService.getAvailableCars();
+        if (availableCars == null) {
+            System.out.println("No cars Available");
+        } else {
+            for (Car car : availableCars) {
+                if (car != null) {
+                    System.out.println(car);
+                }
+            }
+        }
         String carReg = scanner.next();
         System.out.println("Please Enter Start Date for booking in format YYYY-MM-DD:");
         String startDateString = scanner.next();
