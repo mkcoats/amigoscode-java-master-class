@@ -6,7 +6,7 @@ public class UserService {
     private UserDAO userDAO;
 
     public UserService() {
-        userDAO = new UserDAO();
+        userDAO = new UserArrayDataAccessService();
     }
 
     public User getUserById(UUID userId) {
