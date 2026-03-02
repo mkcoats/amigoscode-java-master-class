@@ -12,15 +12,15 @@ import java.util.Arrays;
 import java.util.UUID;
 
 public class CarBookingService {
-    private CarBookingDAO carBookingDAO;
+    private final CarBookingDAO carBookingDAO;
 
-    private CarService carService;
-    private UserService userService;
+    private final CarService carService;
+    private final UserService userService;
 
-    public CarBookingService() {
-        carBookingDAO = new CarBookingDAO();
-        carService = new CarService();
-        userService = new UserService();
+    public CarBookingService(CarBookingDAO carBookingDAO, CarService carService, UserService userService) {
+        this.carBookingDAO = carBookingDAO;
+        this.carService = carService;
+        this.userService = userService;
     }
 
     public CarBooking bookCar(UUID userId, String carRegNumber, LocalDate startDate, LocalDate endDate) {

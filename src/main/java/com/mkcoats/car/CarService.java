@@ -1,10 +1,10 @@
 package com.mkcoats.car;
 
 public class CarService {
-    private CarDAO carDAO;
+    private final CarDAO carDAO;
 
-    public CarService() {
-        carDAO = new CarDAO();
+    public CarService(CarDAO carDAO) {
+        this.carDAO = carDAO;
     }
 
     public Car getCarByReg(String carRegNumber) {

@@ -3,10 +3,10 @@ package com.mkcoats.user;
 import java.util.UUID;
 
 public class UserService {
-    private UserDAO userDAO;
+    private final UserDAO userDAO;
 
-    public UserService() {
-        userDAO = new UserArrayDataAccessService();
+    public UserService(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
     public User getUserById(UUID userId) {
