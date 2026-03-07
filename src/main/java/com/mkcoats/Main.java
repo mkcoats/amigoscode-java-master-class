@@ -179,14 +179,12 @@ public class Main {
     private static void viewElectricCars(CarBookingService carBookingService) {
         // Filter and display only available electric cars
         System.out.println("Selection: View Electric Cars");
-        List<Car> availableCars = carBookingService.getAvailableCars();
-        if (availableCars.isEmpty()) {
+        List<Car> availableElectricCars = carBookingService.getAvailableElectricCars();
+        if (availableElectricCars.isEmpty()) {
             System.out.println("No electric cars Available");
         } else {
-            for (Car car : availableCars) {
-                if (car != null && car.isElectric()) {
-                    System.out.println(car);
-                }
+            for (Car car : availableElectricCars) {
+                System.out.println(car);
             }
         }
     }

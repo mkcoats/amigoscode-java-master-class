@@ -106,4 +106,11 @@ public class CarBookingService {
         }
         return availableCars;
     }
+
+    public List<Car> getAvailableElectricCars() {
+        return getAvailableCars()
+                .stream()
+                .filter(car -> car.isElectric())
+                .toList();
+    }
 }
