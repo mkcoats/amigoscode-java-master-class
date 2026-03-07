@@ -1,5 +1,7 @@
 package com.mkcoats.car;
 
+import java.util.List;
+
 public class CarService {
     private final CarDAO carDAO;
 
@@ -16,7 +18,7 @@ public class CarService {
         return null;
     }
 
-    public Car[] getAllCars() {
+    public List<Car> getAllCars() {
         return carDAO.getCars();
     }
 }

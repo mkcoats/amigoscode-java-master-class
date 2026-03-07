@@ -8,7 +8,8 @@ import com.mkcoats.user.UserService;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class CarBookingService {
@@ -55,7 +56,7 @@ public class CarBookingService {
         return newBooking;
     }
 
-    public User[] getRegisteredUsers() {
+    public List<User> getRegisteredUsers() {
         return userService.getAllUsers();
     }
 
@@ -69,46 +70,38 @@ public class CarBookingService {
         }
     }
 
-    public Car[] getCarsBookedForUser(UUID userId) {
-        int userBookedCarCount = 0;
-        CarBooking[] bookings = carBookingDAO.getBookings();
-        Car[] userBookedCars = new Car[bookings.length];
+    public List<Car> getCarsBookedForUser(UUID userId) {
+        List<CarBooking> bookings = carBookingDAO.getBookings();
+        List<Car> userBookedCars = new ArrayList<>();
         for (CarBooking booking : bookings) {
             if (booking != null && userId.equals(booking.getUser().getId())) {
-                userBookedCars[userBookedCarCount] = booking.getCar();
-                userBookedCarCount++;
+                userBookedCars.add(booking.getCar());
             }
         }
-        return userBookedCarCount > 0 ? Arrays.copyOf(userBookedCars, userBookedCarCount) : null;
+        return userBookedCars;
     }
 
-    public CarBooking[] getAllBookings() {
-        int activeBookingCount = 0;
-        CarBooking[] bookings = carBookingDAO.getBookings();
-        CarBooking[] activebookings = new CarBooking[bookings.length];
-        for (CarBooking booking : bookings) {
-            if (booking != null) {
-                activebookings[activeBookingCount] = booking;
-                activeBookingCount++;
-            }
+    public List<CarBooking> getAllBookings() {
+        return carBookingDAO.getBookings();
+    }
+
+    public List<Car> getAvailableCars() {
+        List<CarBooking> carBookings = carBookingDAO.getBookings();
+        if (carBookings.isEmpty()) {
+            return carService.getAllCars();
         }
-        return activeBookingCount > 0 ? Arrays.copyOf(activebookings, activeBookingCount) : null;
-    }
 
-    public Car[] getAvailableCars() {
-        Car[] availableCars = carService.getAllCars();
-        for (CarBooking booking : carBookingDAO.getBookings()) {
-            if (booking != null) {
-                Car bookedCar = booking.getCar();
-                int index = 0;
-                while (bookedCar != null && index < availableCars.length) {
-                    if (availableCars[index] != null && availableCars[index].getRegNumber().equals(bookedCar.getRegNumber())) {
-                        availableCars[index] = null;
-                        bookedCar = null;
-                    } else {
-                        index++;
-                    }
+        List<Car> availableCars = new ArrayList<>();
+        for (Car car : carService.getAllCars()) {
+            boolean booked = false;
+            for (CarBooking booking : carBookings) {
+                if (booking == null || !car.equals(booking.getCar())) {
+                    continue;
                 }
+                booked = true;
+            }
+            if (!booked) {
+                availableCars.add(car);
             }
         }
         return availableCars;

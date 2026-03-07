@@ -13,21 +13,24 @@ import com.mkcoats.user.UserService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 
 public class Main {
 
-    private final static String MENU = "Car App Menu\n\n" +
-            "1 - Book Car\n" +
-            "2 - Delete Booking\n" +
-            "3 - View All User Booked Cars\n" +
-            "4 - View All Bookings\n" +
-            "5 - View Available Cars\n" +
-            "6 - View Available Electric Cars\n" +
-            "7 - View All Users\n" +
-            "8 - Exit\n";
+    private final static String MENU = """
+            Car App Menu
+            
+            1 - Book Car
+            2 - Delete Booking
+            3 - View All User Booked Cars
+            4 - View All Bookings
+            5 - View Available Cars
+            6 - View Available Electric Cars
+            7 - View All Users
+            8 - Exit
+            """;
 
     public static void main(String[] args) {
         CarDAO carDAO = new CarDAO();
@@ -85,8 +88,8 @@ public class Main {
         System.out.println("Selection: Book a Car");
         System.out.println("Please Enter User ID to book car:");
         System.out.println("--Registerd Users");
-        User[] registeredUsers = carBookingService.getRegisteredUsers();
-        if (registeredUsers == null) {
+        List<User> registeredUsers = carBookingService.getRegisteredUsers();
+        if (registeredUsers.isEmpty()) {
             System.out.println("No Registered Users.");
         } else {
             for (User user : registeredUsers) {
@@ -96,7 +99,7 @@ public class Main {
         String userId = scanner.next();
         System.out.println("Please Enter Car Reg number for booking:");
         System.out.println("--Available Cars");
-        Car[] availableCars = carBookingService.getAvailableCars();
+        List<Car> availableCars = carBookingService.getAvailableCars();
         if (availableCars == null) {
             System.out.println("No cars Available");
         } else {
@@ -132,9 +135,9 @@ public class Main {
         // Display all cars booked by a specific user
         System.out.println("Selection: View User Bookings");
         System.out.println("Please enter User Id:");
-        System.out.println(Arrays.toString(carBookingService.getRegisteredUsers()));
+        System.out.println(carBookingService.getRegisteredUsers().toString());
         String userId = scanner.next();
-        Car[] userBookedCars = carBookingService.getCarsBookedForUser(UUID.fromString(userId));
+        List<Car> userBookedCars = carBookingService.getCarsBookedForUser(UUID.fromString(userId));
         if (userBookedCars == null) {
             System.out.println("No bookings for user: " + userId);
         } else {
@@ -148,8 +151,8 @@ public class Main {
     private static void viewAllBookings(CarBookingService carBookingService) {
         // Display every booking in the system
         System.out.println("Selection: View All Bookings");
-        CarBooking[] bookings = carBookingService.getAllBookings();
-        if (bookings == null) {
+        List<CarBooking> bookings = carBookingService.getAllBookings();
+        if (bookings.isEmpty()) {
             System.out.println("No current bookings");
         } else {
             for (CarBooking booking : bookings) {
@@ -161,8 +164,8 @@ public class Main {
     private static void viewAvailableCars(CarBookingService carBookingService) {
         // List all cars not currently booked
         System.out.println("Selection: View Available Cars");
-        Car[] availableCars = carBookingService.getAvailableCars();
-        if (availableCars == null) {
+        List<Car> availableCars = carBookingService.getAvailableCars();
+        if (availableCars.isEmpty()) {
             System.out.println("No cars Available");
         } else {
             for (Car car : availableCars) {
@@ -176,8 +179,8 @@ public class Main {
     private static void viewElectricCars(CarBookingService carBookingService) {
         // Filter and display only available electric cars
         System.out.println("Selection: View Electric Cars");
-        Car[] availableCars = carBookingService.getAvailableCars();
-        if (availableCars == null) {
+        List<Car> availableCars = carBookingService.getAvailableCars();
+        if (availableCars.isEmpty()) {
             System.out.println("No electric cars Available");
         } else {
             for (Car car : availableCars) {
@@ -191,8 +194,8 @@ public class Main {
     private static void viewAllUsers(CarBookingService carBookingService) {
         // List all registered users
         System.out.println("Selection: View All Users");
-        User[] registeredUsers = carBookingService.getRegisteredUsers();
-        if (registeredUsers == null) {
+        List<User> registeredUsers = carBookingService.getRegisteredUsers();
+        if (registeredUsers.isEmpty()) {
             System.out.println("No Registered Users.");
         } else {
             for (User user : registeredUsers) {

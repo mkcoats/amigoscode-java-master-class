@@ -1,7 +1,7 @@
 package com.mkcoats.user;
 
-import java.util.UUID;
+import java.util.List;
 
 public interface UserDAO {
-    User[] getUsers();
+    List<User> getUsers();
 }

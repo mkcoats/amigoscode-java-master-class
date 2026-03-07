@@ -5,6 +5,7 @@ import com.mkcoats.user.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.UUID;
 
 public class CarBooking {
@@ -65,5 +66,17 @@ public class CarBooking {
                 ", price=" + price +
                 ", status=" + status +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        CarBooking booking = (CarBooking) o;
+        return Objects.equals(getId(), booking.getId()) && Objects.equals(getUser(), booking.getUser()) && Objects.equals(getCar(), booking.getCar()) && Objects.equals(getStartDate(), booking.getStartDate()) && Objects.equals(getEndDate(), booking.getEndDate()) && Objects.equals(getPrice(), booking.getPrice()) && getStatus() == booking.getStatus();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUser(), getCar(), getStartDate(), getEndDate(), getPrice(), getStatus());
     }
 }

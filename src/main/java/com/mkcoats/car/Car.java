@@ -1,6 +1,7 @@
 package com.mkcoats.car;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Car {
@@ -46,5 +47,17 @@ public class Car {
                 ", brand=" + brand +
                 ", isElectric=" + isElectric +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return isElectric() == car.isElectric() && Objects.equals(getId(), car.getId()) && Objects.equals(getRegNumber(), car.getRegNumber()) && Objects.equals(getRentalPricePerDay(), car.getRentalPricePerDay()) && getBrand() == car.getBrand();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getRegNumber(), getRentalPricePerDay(), getBrand(), isElectric());
     }
 }

@@ -1,31 +1,23 @@
 package com.mkcoats.booking;
 
-import com.mkcoats.car.Car;
-import com.mkcoats.car.CarDAO;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class CarBookingDAO {
-    private static CarBooking[] bookings;
+    private static List<CarBooking> bookings;
 
     static {
-        CarDAO carDAO = new CarDAO();
-        Car[] cars = carDAO.getCars();
-        bookings = new CarBooking[cars.length];
+        bookings = new ArrayList<>();
     }
 
-    public CarBooking[] getBookings() {
+    public List<CarBooking> getBookings() {
         return bookings;
     }
 
     public CarBooking saveBooking(CarBooking booking) {
-        for (int i = 0; i < bookings.length; i++) {
-            if (bookings[i] == null) {
-                bookings[i] = booking;
-                return booking;
-            }
-        }
-        return null;
+        bookings.add(booking);
+        return booking;
     }
 
     public CarBooking findBookingById(UUID id) {
@@ -38,9 +30,9 @@ public class CarBookingDAO {
     }
 
     public void deleteBooking(UUID id) {
-        for (int i = 0; i < bookings.length; i++) {
-            if (bookings[i] != null && id.equals(bookings[i].getId())) {
-                bookings[i] = null;
+        for (CarBooking booking : bookings) {
+            if (id.equals(booking.getId())) {
+                bookings.remove(booking);
             }
         }
     }

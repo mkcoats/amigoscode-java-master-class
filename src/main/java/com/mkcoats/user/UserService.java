@@ -1,5 +1,6 @@
 package com.mkcoats.user;
 
+import java.util.List;
 import java.util.UUID;
 
 public class UserService {
@@ -18,7 +19,7 @@ public class UserService {
         return null;
     }
 
-    public User[] getAllUsers() {
+    public List<User> getAllUsers() {
         return userDAO.getUsers();
     }
 }

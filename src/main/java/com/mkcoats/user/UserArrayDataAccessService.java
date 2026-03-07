@@ -1,13 +1,15 @@
 package com.mkcoats.user;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 public class UserArrayDataAccessService implements UserDAO{
 
-    private static final User[] users;
+    private static final List<User> users;
 
     static {
-        users = new User[]{
+        users = Arrays.asList(
                 new User(UUID.fromString("8ca51d2b-aaaf-4bf2-834a-e02964e10fc3"), "James"),
                 new User(UUID.fromString("b10d126a-3608-4980-9f9c-aa179f5cebc3"), "Jamila"),
                 new User(UUID.fromString("413df380-db93-4b2c-8ce3-91ab908b72ec"), "Alex"),
@@ -20,11 +22,11 @@ public class UserArrayDataAccessService implements UserDAO{
                 new User(UUID.fromString("6b5f1276-8931-40b5-9e95-1f8b42230ee6"), "Hellen"),
                 new User(UUID.fromString("c1651d0e-1e0b-402c-9ac7-64ada7fad5f1"), "Ike"),
                 new User(UUID.fromString("27ee58e9-f1e6-4be8-9c7f-0f6db4c6c670"), "John")
-        };
+        );
     }
 
     @Override
-    public User[] getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 }
