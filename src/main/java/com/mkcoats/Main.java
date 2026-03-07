@@ -6,10 +6,7 @@ import com.mkcoats.booking.CarBookingService;
 import com.mkcoats.car.Car;
 import com.mkcoats.car.CarDAO;
 import com.mkcoats.car.CarService;
-import com.mkcoats.user.User;
-import com.mkcoats.user.UserArrayFileDataService;
-import com.mkcoats.user.UserDAO;
-import com.mkcoats.user.UserService;
+import com.mkcoats.user.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -35,7 +32,7 @@ public class Main {
     public static void main(String[] args) {
         CarDAO carDAO = new CarDAO();
         CarBookingDAO carBookingDAO = new CarBookingDAO();
-        UserDAO userDAO = new UserArrayFileDataService();
+        UserDAO userDAO = new UserFakeDataAccessService();
 
         CarService carService = new CarService(carDAO);
         UserService userService = new UserService(userDAO);

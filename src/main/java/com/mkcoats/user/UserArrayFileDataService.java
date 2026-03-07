@@ -12,7 +12,8 @@ public class UserArrayFileDataService implements UserDAO {
     public List<User> getUsers() {
         List<User> users = new ArrayList<>();
         try {
-            Scanner scanner = new Scanner(new File("src/main/java/com/mkcoats/users.csv"));
+            File file = new File(getClass().getClassLoader().getResource("users.csv").getPath());
+            Scanner scanner = new Scanner(file);
             while(scanner.hasNext()) {
                 // "UUID as String, Name as String"
                 String[] values = scanner.nextLine().split(",");
